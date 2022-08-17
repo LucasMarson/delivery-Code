@@ -17,7 +17,8 @@ export function Solicitations () {
                 {
                     [1, 2, 3, 4].map(request => {
                         return (
-                            <Solicitation 
+                            <Solicitation
+                                key={request}
                                 image="https://play-lh.googleusercontent.com/AH4U0T2bZa4vAILaBR1KjC5l3BSiNQdUfT_iJGhvtXIupFOVrjQM1XENejyl96Wmdb4"
                                 evaluation= "4.5"
                             />

@@ -4,24 +4,83 @@
       "id": 1,
       "email": "lucas-marson@hotmail.com",
       "password": "121323"
+    }
+  ],
+  "cadastre": [
+    {
+      "id": 1,
+      "name": "Lucas",
+      "email": "lucas-marson@hotmail.com",
+      "password": "ghfghfgfdfgfg",
+      "confirmPassword": "ghfghfgfdfgfg",
+      "adresse": "Rua jorge ricardo fernandes",
+      "complement": "chacara",
+      "district": "vale verde II",
+      "city": "Pedreira-SP",
+      "zipCode": "13920-000"
     },
     {
+      "name": "Lucas Marson",
       "email": "lucas-marson@hotmail.com",
-      "password": "casdcdscdscc",
+      "password": "123456",
+      "confirmPassword": "123456",
+      "adresse": "rua ernesto corsi",
+      "complement": "casa",
+      "district": "vale",
+      "zipCode": "1390527000",
       "id": 2
     },
     {
+      "name": "users",
       "email": "lucas-marson@hotmail.com",
-      "password": "12345678",
+      "password": "123456",
+      "confirmPassword": "123456",
+      "adresse": "rua ernesto corsi",
+      "complement": "casa",
+      "district": "vale",
+      "city": "Amparo",
+      "country": "São Paulo",
+      "zipCode": "1390527000",
       "id": 3
     },
     {
+      "name": "sma sa",
       "email": "lucas-marson@hotmail.com",
-      "password": "swddasdasda",
+      "password": "123456",
+      "confirmPassword": "123456",
+      "adresse": "rua ernesto corsi",
+      "complement": "casa",
+      "district": "vale",
+      "city": "Amparo",
+      "country": "SP",
+      "zipCode": "1390527000",
       "id": 4
+    },
+    {
+      "name": "user_by_name",
+      "email": "campos_serginho@uol.com.br",
+      "password": "123456",
+      "confirmPassword": "123456",
+      "adresse": "rua ernesto corsi",
+      "complement": "casa",
+      "district": "ja",
+      "city": "Amparo",
+      "country": "Brasil",
+      "zipCode": "1390527000",
+      "id": 5
+    },
+    {
+      "name": "Lucas Marson",
+      "email": "lucas-marson@hotmail.com",
+      "password": "123456",
+      "confirmPassword": "123456",
+      "adresse": "JORGE RICARDO FERNANDES",
+      "complement": "casa",
+      "district": "vale",
+      "city": "Pedreira",
+      "country": "SP",
+      "zipCode": "13920-000",
+      "id": 6
     }
-  ],
-  "createUser": [
-    {}
   ]
 }

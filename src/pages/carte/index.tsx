@@ -52,7 +52,7 @@ export function Carte() {
 
         {[1, 2, 3].map((category) => {
           return (
-            <Flex direction="column">
+            <Flex key={category} direction="column">
                 <Stack>
                     <Text as="h3" fontWeight="bold" fontSize="2xl">Destaques</Text>
                 </Stack>
@@ -62,7 +62,7 @@ export function Carte() {
                     alignItems="center"
                 >
                     {[1, 2, 3, 4, 5, 6].map((product) => {
-                    return <ListProduct />;
+                    return <ListProduct key={product} />;
                     })}
                 </Grid>
             </Flex>

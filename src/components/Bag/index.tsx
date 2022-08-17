@@ -32,7 +32,7 @@ export default function Bag() {
             {
                 [1, 2, 3, 4, 5].map((product) => {
                     return (
-                      <ListBag name="Big Mac" price="22,00" amount="01" value="22,00"/>
+                      <ListBag key={product} name="Big Mac" price="22,00" amount="01" value="22,00"/>
                     )
                 })
             }

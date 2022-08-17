@@ -9,11 +9,10 @@ import {
   Grid,
   useBreakpointValue,
   FormLabel,
-  Select,
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useForm } from "react-hook-form";
@@ -30,6 +29,7 @@ type CreateUserFormData = {
   complement: string,
   district: string,
   city: string,
+  country: string,
   zipCode: string,
 }
 
@@ -44,6 +44,7 @@ const createUserFormSchema = yup.object().shape({
   complement: yup.string().required("Complemento obrigatorio"),
   district: yup.string().required("Bairro obrigatorio"),
   city: yup.string().required("Cidade obrigatorio"),
+  country: yup.string().required("Cidade obrigatorio"),
   zipCode: yup.string().required("CEP obrigatorio"),
 })
 
@@ -54,17 +55,7 @@ export function Cadastre() {
     lg: true,
   });
 
-  enum CityEnum {
-    pedreira = "Pedreira - SP",
-    campinas = "Campinas - SP",
-    saoPaulo = "SaoPaulo - SP"
-  }
-
-  interface CityProps {
-    city: CityEnum
-  }
-
-  const { register, handleSubmit, formState } = useForm<CreateUserFormData, CityProps>({
+  const { register, handleSubmit, formState } = useForm<CreateUserFormData>({
     resolver: yupResolver(createUserFormSchema)
   });
 
@@ -87,6 +78,8 @@ export function Cadastre() {
   const [complement, setComplement] = useState('');
   const [district, setDistrict] = useState('');
   const [zipCode, setZipCode] = useState('');
+  const [country, setCountry] = useState('');
+  const [city, setCity] = useState('');
 
   async function onSubmit() {
     await new Promise (resolve => setTimeout(resolve, 2000))
@@ -96,15 +89,17 @@ export function Cadastre() {
       email, 
       password, 
       confirmPassword, 
-      adresse, complement, 
-      district, 
+      adresse, 
+      complement, 
+      district,
+      city,
+      country,
       zipCode
     }).then (response => (
       console.log(response),
       navigate('/')
     )).catch(err => console.error(err))
   }
-
   return (
     <Grid templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}>
       <VStack mt="24" mx="auto" align="center">
@@ -134,7 +129,6 @@ export function Cadastre() {
 
               <Text as="span">E-mail</Text>
               <Input
-                type="email"
                 {...register('email')}
                 onChange={(event) => setEmail(event.target.value)}
                 focusBorderColor="red.500"
@@ -193,7 +187,6 @@ export function Cadastre() {
               <VStack align="left" w={["100%", "80%"]}>
                 <Text as="span">Endereço</Text>
                 <Input
-                  type="text"
                   {...register("adresse")}
                   onChange={(event) => setAdresse(event.target.value)}
                   focusBorderColor="red.500"
@@ -205,7 +198,6 @@ export function Cadastre() {
               <VStack align="left">
                 <Text as="span">Compl.</Text>
                 <Input
-                  type="text"
                   {...register('complement')}
                   onChange={(event) => setComplement(event.target.value)}
                   focusBorderColor="red.500"
@@ -223,7 +215,6 @@ export function Cadastre() {
               <VStack align="left" w={["100%", "100%", "100%", "70%"]}>
                 <Text as="span">Bairro</Text>
                 <Input
-                  type="text"
                   {...register('district')}
                   onChange={(event) => setDistrict(event.target.value)}
                   focusBorderColor="red.500"
@@ -233,33 +224,40 @@ export function Cadastre() {
               </VStack>
 
               <VStack align="left">
-                <FormControl>
-                  <FormLabel>Cidade</FormLabel>
-                  <Select
-                    placeholder="Cidade"
-                    focusBorderColor="red.500"
+                <Text as="span">Cidade</Text>
+                  <Input
                     {...register('city')}
-                  >
-                    <option value="Pedreira - SP">Pedreira - SP</option>
-                    <option value="São Paulo - SP">São Paulo - SP</option>
-                    <option value="Campinas - SP">Campinas - SP</option>
-                  </Select>
-                </FormControl>
+                    onChange={(event) => setCity(event.target.value)}
+                    focusBorderColor="red.500"
+                  />
                 <Text as="span" color="red.500" fontSize="sm" lineHeight="1">{errors.city?.message}</Text>
               </VStack>
             </Flex>
 
-            <VStack align="left">
-              <Text as="span">CEP</Text>
-              <Input
-                type="text"
-                {...register('zipCode')}
-                onChange={(event) => setZipCode(event.target.value)}
-                focusBorderColor="red.500"
-              />
-              <Text as="span" color="red.500" fontSize="sm" lineHeight="1">{errors.zipCode?.message}</Text>
-            </VStack>
-
+            <Flex
+              direction={["column", "column", "column", "row"]}
+              gap="2"
+              mb="5"
+            >
+              <VStack align="left">
+                <Text as="span">Estado</Text>
+                <Input
+                  {...register('country')}
+                  onChange={(event) => setCountry(event.target.value)}
+                  focusBorderColor="red.500"
+                />
+                <Text as="span" color="red.500" fontSize="sm" lineHeight="1">{errors.country?.message}</Text>
+              </VStack>
+              <VStack align="left"  w="100%">
+                <Text as="span">CEP</Text>
+                <Input
+                  {...register('zipCode')}
+                  onChange={(event) => setZipCode(event.target.value)}
+                  focusBorderColor="red.500"
+                />
+                <Text as="span" color="red.500" fontSize="sm" lineHeight="1">{errors.zipCode?.message}</Text>
+              </VStack>
+            </Flex>
             <Button type="submit" size="lg" colorScheme="red" w="100%" mt="6" isLoading={formState.isSubmitting}>
               Criar conta
             </Button>
@@ -288,7 +286,7 @@ export function Cadastre() {
         <Image
           src="../../assets/fundo-login.jpg"
           alt="Delivery Mais"
-          h="100vh"
+          h="100%"
           w="100%"
           display="block"
           fit="cover"

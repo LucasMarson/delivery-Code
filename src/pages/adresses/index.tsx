@@ -16,7 +16,7 @@ export function Adresses() {
             {
                 [1, 2, 3].map(address => {
                     return (
-                        <Address />
+                        <Address key={address} />
                     )
                 })
             }

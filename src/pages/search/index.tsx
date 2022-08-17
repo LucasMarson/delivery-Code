@@ -12,6 +12,7 @@ export function Search() {
         {[1, 2, 3, 4, 5, 6, 7, 8].map((establishment) => {
           return (
             <Establishment
+              key={establishment}
               image="https://play-lh.googleusercontent.com/AH4U0T2bZa4vAILaBR1KjC5l3BSiNQdUfT_iJGhvtXIupFOVrjQM1XENejyl96Wmdb4"
               name="McDonald's"
               evaluation="4.5"

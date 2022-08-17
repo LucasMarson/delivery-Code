@@ -10,7 +10,7 @@ export function Home() {
       <Wrap justify="center" align="center" spacing={["3", "12"]} mt="24">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((categorie) => {
           return (
-            <Categories src="https://d4p17acsd5wyj.cloudfront.net/shortcuts/grocery.png" />
+            <Categories key={categorie} src="https://d4p17acsd5wyj.cloudfront.net/shortcuts/grocery.png" />
           );
         })}
       </Wrap>
@@ -18,14 +18,14 @@ export function Home() {
       <Wrap justify="center" align="center" spacing={["3", "6"]} mt="6">
         {[1, 2, 3].map((banner) => {
           return (
-            <Banner src="https://static-images.ifood.com.br/image/upload/t_high,q_100/webapp/landing/landing-banner-2.png" />
+            <Banner key={banner} src="https://static-images.ifood.com.br/image/upload/t_high,q_100/webapp/landing/landing-banner-2.png" />
           );
         })}
       </Wrap>
 
       {[1, 2, 3].map((destaque) => {
         return (
-          <Flex justify={["left", "center"]} align="center">
+          <Flex key={destaque} justify={["left", "center"]} align="center">
             <Flex direction="column" w="100%">
               <Text as="span" mt="8" fontSize="25px" fontWeight="semibold">
                 Destaques: entrega gratis
@@ -37,6 +37,7 @@ export function Home() {
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((establishment) => {
                   return (
                     <Establishment
+                      key={establishment}
                       image="https://static-images.ifood.com.br/image/upload/t_high/logosgde/a46086fe-f27e-48d8-84be-77033520d8de/202105201017_V0xh_i.png"
                       name="McDonald's"
                       evaluation="4.5"

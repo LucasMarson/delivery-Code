@@ -48,11 +48,10 @@ export function Login() {
             password,
         }).then((response) => {
             localStorage.setItem("sessionToken", response.data.token)
-            localStorage.setItem("sessionId", response.data.id_usuario)
+            localStorage.setItem("sessionId", response.data.id)
             localStorage.setItem("sessionEmail", email)
-            localStorage.setItem("sessionCodCidade", response.data.cod_cidade)
-            localStorage.setItem("sessionCidade", response.data.cidade)
-            localStorage.setItem("sessionUF", response.data.uf)
+            localStorage.setItem("sessionzipCode", response.data.country)
+            localStorage.setItem("sessionCity", response.data.city)
             console.log(response)
             navigate('/')
         }).catch((err) => {
