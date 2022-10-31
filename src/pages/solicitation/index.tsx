@@ -1,11 +1,24 @@
 import { VStack, Flex, Text, Wrap } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { Solicitation } from "../../components/Solicitation";
-
-
+import { api } from "../../services/api";
 
 export function Solicitations () {
+
+    const [pedidos, setPedidos] = useState<any[]>([]);
+
+    useEffect(() => {
+        api.get("v1/pedidos")
+        .then(response => {
+            setPedidos(response.data)
+        })
+        .catch(error => {
+
+        })
+    },[])
+
     return (
-        <VStack align="center" justify="center">
+        <VStack align="center" justify="center" mx={["0","32"]}>
           <Flex direction="column">
             <Flex align="center" mt={["20", "24"]} mb="8" >
                 <Text as="h2" fontWeight="bold" fontSize="25px">
@@ -15,12 +28,19 @@ export function Solicitations () {
     
             <Wrap spacing="10" >
                 {
-                    [1, 2, 3, 4].map(request => {
+                    pedidos.map(pedido => {
                         return (
                             <Solicitation
-                                key={request}
-                                image="https://play-lh.googleusercontent.com/AH4U0T2bZa4vAILaBR1KjC5l3BSiNQdUfT_iJGhvtXIupFOVrjQM1XENejyl96Wmdb4"
-                                evaluation= "4.5"
+                                key= {pedido.id_pedido}
+                                name= {pedido.nome}
+                                image= {pedido.url_logo}
+                                avaliacao= {pedido.avaliacao}
+                                qtd_item= {pedido.qtd_item}
+                                id_pedido= {pedido.id_pedido}
+                                vl_total= {pedido.vl_total}
+                                dt_pedido= {pedido.dt_pedido}
+                                id_estabelecimento= {pedido.id_estabelecimento}
+                                status= {pedido.status}
                             />
                         )
                     })

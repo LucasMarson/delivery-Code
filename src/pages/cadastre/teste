@@ -9,8 +9,9 @@ import {
   useBreakpointValue,
   InputGroup,
   InputRightElement,
+  Select,
 } from "@chakra-ui/react";
-import { useState, FormEvent } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useForm } from "react-hook-form";
@@ -29,7 +30,7 @@ type CreateUserFormData = {
   bairro: string,
   cidade: string,
   uf: string,
-  cod_cidade: string,
+  codCidade: string,
   cep: string,
 }
 
@@ -79,8 +80,16 @@ export function Cadastre() {
   const [bairro, setBairro] = useState('');
   const [cidade, setCidade] = useState('');
   const [uf, setUf] = useState('');
-  const [cod_cidade, setCodCidade] = useState('');
+  const [codCidade, setCodCidade] = useState('');
   const [cep, setCep] = useState('');
+  const [cidades, setCidades] = useState<[]>([]);
+
+  function SalvarCidade( e: any ) {
+    const [cid, est] = e.target[e.target.selectedIndex].text.split(" - ");
+    setCidade(cid);
+    setUf(est);
+    setCodCidade(e.target.value);
+  }
 
   async function onSubmit() {
     await new Promise (resolve => setTimeout(resolve, 2000))
@@ -95,18 +104,27 @@ export function Cadastre() {
       bairro,
       cidade,
       uf,
-      cod_cidade,
-      cep
+      cod_cidade: codCidade,
+      cep,
+      cidades
     }).then (response => {
       localStorage.setItem('sessionToken', response.data.token)
       localStorage.setItem('sessionId', response.data.id_usuario)
       localStorage.setItem('sessionEmail', email)
-      localStorage.setItem('sessionCodCidade', cod_cidade)
+      localStorage.setItem('sessionCodCidade', codCidade)
       localStorage.setItem('sessionCidade', cidade)
       localStorage.setItem('sessionUf', uf)
       navigate('/')
     }).catch(err => console.error(err))
   }
+
+ useEffect(() => {
+  api.get('v1/cidades')
+  .then(response => {
+    setCidades(response.data)
+  }).catch(err => console.error(err))
+ },[])
+
   return (
     <Grid templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}>
       <VStack mt="24" mx="auto" align="center">
@@ -232,12 +250,17 @@ export function Cadastre() {
 
               <VStack align="left">
                 <Text as="span">Cidade</Text>
-                  <Input
-                    {...register('cidade')}
-                    onChange={(event) => setCidade(event.target.value)}
-                    focusBorderColor="red.500"
-                  />
-                <Text as="span" color="red.500" fontSize="sm" lineHeight="1">{errors.cidade?.message}</Text>
+                  <Select name="cidades" id="cidades" onChange={SalvarCidade}>
+                    <option value="000000">Cidade</option>
+
+                    {
+                      cidades.map((c) => {
+                        return ( 
+                          <option value={c.cod_cidade}>{c.cidade} - {c.uf}</option>
+                        )
+                      })
+                    }
+                  </Select>
               </VStack>
             </Flex>
 
@@ -246,26 +269,7 @@ export function Cadastre() {
               gap="2"
               mb="5"
             >
-              <VStack align="left">
-                <Text as="span">Estado</Text>
-                <Input
-                  {...register('uf')}
-                  onChange={(event) => setUf(event.target.value)}
-                  focusBorderColor="red.500"
-                />
-                <Text as="span" color="red.500" fontSize="sm" lineHeight="1">{errors.uf?.message}</Text>
-              </VStack>
-              <VStack align="left"  w="50%">
-                <Text as="span">Cod.Cidade</Text>
-                <Input
-                  {...register('cod_cidade')}
-                  onChange={(event) => setCodCidade(event.target.value)}
-                  focusBorderColor="red.500"
-                />
-                <Text as="span" color="red.500" fontSize="sm" lineHeight="1">{errors.cod_cidade?.message}</Text>
-              </VStack>
-            </Flex>
-            <VStack align="left"  w="100%">
+              <VStack align="left"  w="100%">
                 <Text as="span">CEP</Text>
                 <Input
                   {...register('cep')}
@@ -274,6 +278,7 @@ export function Cadastre() {
                 />
                 <Text as="span" color="red.500" fontSize="sm" lineHeight="1">{errors.cep?.message}</Text>
               </VStack>
+            </Flex>
             <Button type="submit" size="lg" colorScheme="red" w="100%" mt="6" isLoading={formState.isSubmitting}>
               Criar conta
             </Button>

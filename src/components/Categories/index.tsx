@@ -1,17 +1,19 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-interface CategoriesProps {
-  src: string;
+interface CategoriaProps {
+  url_imagem: string;
+  descricao: string;
+  id_categoria: string;
 }
 
-export function Categories(props: CategoriesProps) {
+export function Categoria(props: CategoriaProps) {
   return (
-    <Link to="/search">
-      <Flex direction="column" align="center" _hover={{color: "red.500"}}>
-        <Image src={props.src} alt="categoria" w="80px" />
+    <Link to={`/busca?id_cat=${props.id_categoria}&descr=${props.descricao}`}>
+      <Flex direction="column" align="center" _hover={{ color: "red.500" }}>
+        <Image src={props.url_imagem} alt="categoria" w="80px" />
         <Text as="span" fontSize="13px">
-          Categoria
+          {props.descricao}
         </Text>
       </Flex>
     </Link>

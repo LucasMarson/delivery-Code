@@ -2,6 +2,7 @@ import { Flex, Icon, IconButton, Image, useBreakpointValue } from "@chakra-ui/re
 import { RiMenuLine } from 'react-icons/ri'
 import { Sidebar } from "../Sidebar";
 import { useSidebarDrawer } from "../../context/SidebarDrawerContext";
+import { Link } from "react-router-dom";
 
 export function Header () {
     const { onOpen} = useSidebarDrawer()
@@ -23,7 +24,9 @@ export function Header () {
             bg= "white"
             position="fixed"
         >
-            <Image src="../../assets/logo.png"/>
+            <Link to="/">
+                <Image src="../../assets/logo.png"/>
+            </Link>
 
             {!isWideVersion && (
                 <IconButton

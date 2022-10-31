@@ -1,7 +1,34 @@
 import { HStack, VStack, Text, Flex, Grid } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { Establishment } from "../../components/Establishment";
+import { api } from "../../services/api";
 
 export function Favorites() {
+
+  const [favotiros, setFavoritos] = useState<any[]>([])
+
+  function ListarFavoritos() {
+    api.get("v1/estabelecimentos/favoritos")
+    .then(res => {
+      setFavoritos(res.data)
+    })
+    .catch(err => {
+      console.log(err); 
+    })
+  }
+
+  function DeleteFavorito(id: number) {
+    api.delete(`v1/estabelecimentos/favoritos/${id}`)
+    .then(res => {
+      ListarFavoritos()
+    })
+    .catch(err => {
+      console.log(err); 
+    })
+  }
+
+  useEffect(() => ListarFavoritos(),[]);
+
   return (
     <VStack justify="center" align={["left","center"]}>
       <Flex direction="column">
@@ -12,19 +39,22 @@ export function Favorites() {
         </HStack>
 
         <Grid 
-          templateColumns={["none", "repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(4, 1fr)"]}
+          templateColumns={["none", "repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]}
           gap={["4","10" ]}
           mt="4"
         >
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((establishment) => {
+          {favotiros.map((estabelecimento) => {
             return (
               <Establishment
-                key={establishment}
-                image="https://play-lh.googleusercontent.com/AH4U0T2bZa4vAILaBR1KjC5l3BSiNQdUfT_iJGhvtXIupFOVrjQM1XENejyl96Wmdb4"
-                name="McDonald's"
-                evaluation="4.5"
-                category="Lanches"
+                key={estabelecimento.id_estabelecimento}
+                image={estabelecimento.url_logo}
+                name={estabelecimento.nome}
+                avaliacao={estabelecimento.avaliacao}
+                category={estabelecimento.categoria}
+                id_estabelecimento={estabelecimento.id_estabelecimento}
+                id_favorito={estabelecimento.id_favorito}
                 buttonRemoveFavorites
+                onClickRemoverFavorito={DeleteFavorito}
               />
             );
           })}

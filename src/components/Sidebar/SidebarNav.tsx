@@ -11,17 +11,25 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { BsFillPinMapFill } from "react-icons/bs";
 import { FaShoppingBag, FaUser } from "react-icons/fa";
 import { MdSearch } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export function SidebarNav() {
+
+  const navigate = useNavigate();
+  const [busca, setBusca] = useState("")
 
   function openBag() {
     const event = new CustomEvent('openBag')
     window.dispatchEvent(event);
+  }
+
+  function Buscar() {
+    navigate(`/busca?q=${busca}`)
   }
 
   return (
@@ -31,6 +39,7 @@ export function SidebarNav() {
           <Input
             type="search"
             placeholder="Procurar no restaurante..."
+            onChange={(e) => setBusca(e.target.value)}
             borderRightRadius="none"
           />
           <Button
@@ -38,6 +47,7 @@ export function SidebarNav() {
             borderLeftRadius="none"
             px="6"
             colorScheme="red"
+            onClick={Buscar}
           >
             Buscar
           </Button>

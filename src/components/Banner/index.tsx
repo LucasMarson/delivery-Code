@@ -2,13 +2,15 @@ import { Image } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 interface BannerProps {
-    src: string;
+    url_imagem: string;
+    descricao: string;
+    id_banner: string;
   }
 
-export function Banner ({src}: BannerProps) {
+export function Banner (props: BannerProps) {
     return (
-        <Link to="/">
-            <Image src={src} alt="Banner" maxWidth="100%" borderRadius="40px"/>
+        <Link to={`/busca?id_banner=${props.id_banner}&descr=${props.descricao}`}>
+            <Image src={props.url_imagem} alt="Banner" w="400px" maxWidth="100%" borderRadius="15px"/>
         </Link>
     )
 }
