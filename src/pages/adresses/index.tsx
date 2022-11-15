@@ -10,9 +10,6 @@ export function Adresses() {
   const [enderecos, setEnderecos] = useState<any[]>([])
   const [EnderecoOpen, setEnderecoOpen] = useState(false)
 
-  const {openModal} = useModalOpen()
-  const modalOpen = () => openModal()
-
   function ListarEnderecos() {
     api.get('v1/usuarios/enderecos')
     .then(res => setEnderecos(res.data))
