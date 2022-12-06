@@ -73,7 +73,7 @@ export function Login() {
         localStorage.setItem('sessionUf', response.data.uf);
         localStorage.setItem('sessionNome', response.data.nome);
         console.log(response);
-        navigate("/");
+        navigate("/home");
       })
       .catch((err) => {
         console.error(err);
