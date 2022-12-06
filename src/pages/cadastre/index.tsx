@@ -104,7 +104,7 @@ export function Cadastre() {
       localStorage.setItem('sessionCodCidade', cod_cidade)
       localStorage.setItem('sessionCidade', cidade)
       localStorage.setItem('sessionUf', uf)
-      navigate('/')
+      navigate('/home')
     }).catch(err => console.error(err))
   }
   return (
